@@ -31,8 +31,8 @@ def get_terminal_width():
  
 def display_graph(my_dirs, tty_width):
     total_size = int(my_dirs[0].size)
-    print("[debug] total_size: " + str(total_size))
-    print("[debug] tty width: " + str(tty_width))
+    #print("[debug] total_size: " + str(total_size))
+    #print("[debug] tty width: " + str(tty_width))
     tot_cars = tty_width - 6
     for each in my_dirs[-(len(my_dirs)-1):]:
         perc = (float(each.size) / total_size) * 100
