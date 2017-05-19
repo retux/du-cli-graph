@@ -32,18 +32,37 @@ def get_terminal_width():
  
 def display_graph(my_dirs, tty_width):
     total_size = int(my_dirs[0].size)
+    unit = 'Kb'
+    if total_size > 1000 and total_size < 1000000:
+        unit = 'Mb'
+    elif total_size > 1000000:
+        unit = 'Gb'
+        print ("[debug] unit=" + unit)
     sys.stdout.write (GREEN)
-    print("[info] {0} total size: {1}".format(my_dirs[1].dirname, my_dirs[1].size))
+
+    if unit == 'Mb':
+        print("[info] {0} total size: {1:.3f} {2}".format(my_dirs[1].dirname, float(my_dirs[1].size) / 1000, unit))
+    elif unit == 'Gb':
+        print("[info] {0} total size: {1:.3f} {2}".format(my_dirs[1].dirname, float(my_dirs[1].size) / 1000000,unit))
+    else:
+        print("[info] {0} total size: {1} {2}".format(my_dirs[1].dirname, my_dirs[1].size, unit))
     sys.stdout.write (RESET)
     print ("")
     sys.stdout.write (YELLOW)
     print('{0:70} || {1:10s} {2:10s}'.format('directory', 'size', 'usage perc'))
+    print ("")
     sys.stdout.write (RESET)
     tot_cars = tty_width - 6
     for each in my_dirs[-(len(my_dirs)-2):]:
         perc = (float(each.size) / total_size) * 100
-        curr_cars = int(round (( perc * tot_cars ) / 100,0)) 
-        print('{0:70} => {1:10s} {2:.2f} %'.format(each.dirname, each.size, perc))
+        curr_cars = int(round (( perc * tot_cars ) / 100,0))
+        if unit == 'Gb':
+            print('{0:70} => {1:10.3f} {2}   {3:.2f} %'.format(each.dirname, float(each.size)/1000000, unit, perc))
+        elif unit == 'Mb':
+            print('{0:70} => {1:10.3f} {2}   {3:.2f} %'.format(each.dirname, float(each.size)/1000, unit, perc))
+
+        else:
+            print('{0:70} => {1:10s} {2:.2f} %'.format(each.dirname, each.size, perc))
         sys.stdout.write("[ ")
         if perc >= 70.0:
             sys.stdout.write(RED)
@@ -71,7 +90,6 @@ def read_stdin(my_dirs):
         entry_arr =  entry.split('\t')
         entry_to_add = dirEntry(entry_arr[1], entry_arr[0])
         my_dirs.append(entry_to_add)
-        #my_dirs[entry_arr[1]] = entry_arr[0]
  
  
 
