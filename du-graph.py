@@ -6,6 +6,7 @@ RED   = "\033[1;31m"
 BLUE  = "\033[1;34m"
 CYAN  = "\033[1;36m"
 GREEN = "\033[0;32m"
+YELLOW = "\033[1;33m"
 RESET = "\033[0;0m"
 
 
@@ -31,10 +32,15 @@ def get_terminal_width():
  
 def display_graph(my_dirs, tty_width):
     total_size = int(my_dirs[0].size)
-    #print("[debug] total_size: " + str(total_size))
-    #print("[debug] tty width: " + str(tty_width))
+    sys.stdout.write (GREEN)
+    print("[info] {0} total size: {1}".format(my_dirs[1].dirname, my_dirs[1].size))
+    sys.stdout.write (RESET)
+    print ("")
+    sys.stdout.write (YELLOW)
+    print('{0:70} || {1:10s} {2:10s}'.format('directory', 'size', 'usage perc'))
+    sys.stdout.write (RESET)
     tot_cars = tty_width - 6
-    for each in my_dirs[-(len(my_dirs)-1):]:
+    for each in my_dirs[-(len(my_dirs)-2):]:
         perc = (float(each.size) / total_size) * 100
         curr_cars = int(round (( perc * tot_cars ) / 100,0)) 
         print('{0:70} => {1:10s} {2:.2f} %'.format(each.dirname, each.size, perc))
@@ -55,8 +61,6 @@ def display_graph(my_dirs, tty_width):
 def main():
     my_dirs = []
     read_stdin(my_dirs)
-    #for each in my_dirs:
-    #    print(each.dirname + " " + each.size)
     tty_width = get_terminal_width()
     display_graph(my_dirs, tty_width)
  
