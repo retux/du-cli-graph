@@ -22,7 +22,7 @@ function main {
 	else
 	    NENTRIES=${2}
     fi
-    du -kcd 1 ${1} | sort -rn | head -n ${NENTRIES} | ./du-graph.py
+    du -kcd 1 ${1} | sort -n | head -n ${NENTRIES} | ./du-graph.py
 }
 
 
