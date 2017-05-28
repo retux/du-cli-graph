@@ -11,6 +11,14 @@ function usage {
 
 }
 
+function is_integer {
+    if [[ ! $1 == ?(-)+([0-9]) ]]
+    then
+        echo "[error] ${1} is not an integer. See what you're doin' fella."
+        exit 1
+    fi
+}
+
 function main {
     if [[ -z ${1} ]]
         then
@@ -21,9 +29,11 @@ function main {
 	    NENTRIES=20
 	else
 	    NENTRIES=${2}
+            is_integer "${2}"
+            NENTRIES=$((NENTRIES+2))
     fi
-    du -kcd 1 ${1} | sort -nr | head -n ${NENTRIES} | ./du-graph.py
+    du -kcd 1 "${1}" | sort -nr | head -n ${NENTRIES} | ./du-graph.py
 }
 
 
-main $*
+main "$@"

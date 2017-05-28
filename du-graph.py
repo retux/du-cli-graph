@@ -37,7 +37,6 @@ def display_graph(my_dirs, tty_width):
         unit = 'Mb'
     elif total_size > 1000000:
         unit = 'Gb'
-        print ("[debug] unit=" + unit)
     sys.stdout.write (GREEN)
 
     if unit == 'Mb':
@@ -48,6 +47,11 @@ def display_graph(my_dirs, tty_width):
         print("[info] {0} total size: {1} {2}".format(my_dirs[1].dirname, my_dirs[1].size, unit))
     sys.stdout.write (RESET)
     print ("")
+    #if len(my_dirs) == 2:
+    #    sys.stdout.write(YELLOW)
+    #    print ("Buddy, there are no entries in this directory tree.")
+    #    sys.stdout.write (RESET)
+    #    return False
     sys.stdout.write (YELLOW)
     print('{0:70} || {1:10s} {2:10s}'.format('directory', 'size', 'usage perc'))
     print ("")
@@ -60,7 +64,6 @@ def display_graph(my_dirs, tty_width):
             print('{0:70} => {1:10.3f} {2}   {3:.2f} %'.format(each.dirname, float(each.size)/1000000, unit, perc))
         elif unit == 'Mb':
             print('{0:70} => {1:10.3f} {2}   {3:.2f} %'.format(each.dirname, float(each.size)/1000, unit, perc))
-
         else:
             print('{0:70} => {1:10s} {2:.2f} %'.format(each.dirname, each.size, perc))
         sys.stdout.write("[ ")
