@@ -1,6 +1,10 @@
 #!/usr/bin/env python
+
+# -*- coding: utf-8 -*-
+
 import sys
 import subprocess
+import codecs
 
 RED   = "\033[1;31m"  
 BLUE  = "\033[1;34m"
@@ -40,11 +44,11 @@ def display_graph(my_dirs, tty_width):
     sys.stdout.write (GREEN)
 
     if unit == 'Mb':
-        print("[info] {0} total size: {1:.3f} {2}".format(my_dirs[1].dirname, float(my_dirs[1].size) / 1000, unit))
+        print("[info] {0} total size: {1:.3f} {2}".format(my_dirs[1].dirname.encode('utf-8'), float(my_dirs[1].size) / 1000, unit))
     elif unit == 'Gb':
-        print("[info] {0} total size: {1:.3f} {2}".format(my_dirs[1].dirname, float(my_dirs[1].size) / 1000000,unit))
+        print("[info] {0} total size: {1:.3f} {2}".format(my_dirs[1].dirname.encode('utf-8'), float(my_dirs[1].size) / 1000000,unit))
     else:
-        print("[info] {0} total size: {1} {2}".format(my_dirs[1].dirname, my_dirs[1].size, unit))
+        print("[info] {0} total size: {1} {2}".format(my_dirs[1].dirname.encode('utf-8'), my_dirs[1].size, unit))
     sys.stdout.write (RESET)
     print ("")
     if len(my_dirs) == 2:
@@ -61,11 +65,11 @@ def display_graph(my_dirs, tty_width):
         perc = (float(each.size) / total_size) * 100
         curr_cars = int(round (( perc * tot_cars ) / 100,0))
         if unit == 'Gb':
-            print('{0:70} => {1:10.3f} {2}   {3:.2f} %'.format(each.dirname, float(each.size)/1000000, unit, perc))
+            print('{0:70} => {1:10.3f} {2}   {3:.2f} %'.format(each.dirname.encode('utf-8'), float(each.size)/1000000, unit, perc))
         elif unit == 'Mb':
-            print('{0:70} => {1:10.3f} {2}   {3:.2f} %'.format(each.dirname, float(each.size)/1000, unit, perc))
+            print('{0:70} => {1:10.3f} {2}   {3:.2f} %'.format(each.dirname.encode('utf-8'), float(each.size)/1000, unit, perc))
         else:
-            print('{0:70} => {1:10s} {2:.2f} %'.format(each.dirname, each.size, perc))
+            print('{0:70} => {1:10s} {2:.2f} %'.format(each.dirname.encode('utf-8'), each.size, perc))
         sys.stdout.write("[ ")
         if perc >= 70.0:
             sys.stdout.write(RED)
@@ -88,7 +92,7 @@ def main():
  
  
 def read_stdin(my_dirs):
-    for line in sys.stdin:
+    for line in codecs.getreader('utf-8')(sys.stdin):
         entry=line.rstrip()
         entry_arr =  entry.split('\t')
         entry_to_add = dirEntry(entry_arr[1], entry_arr[0])
