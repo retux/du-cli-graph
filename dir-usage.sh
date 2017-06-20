@@ -32,7 +32,7 @@ function main {
             is_integer "${2}"
             NENTRIES=$((NENTRIES+2))
     fi
-    du -kcd 1 "${1}" | sort -nr | head -n ${NENTRIES} | ./du-graph.py
+    du -kcad 1 "${1}" | sort -nr | head -n ${NENTRIES} | ./du-graph.py
 }
 
 

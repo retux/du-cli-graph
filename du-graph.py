@@ -57,7 +57,7 @@ def display_graph(my_dirs, tty_width):
         sys.stdout.write (RESET)
         return False
     sys.stdout.write (YELLOW)
-    print('{0:70} || {1:10s} {2:10s}'.format('directory', 'size', 'usage perc'))
+    print('{0:74} {1:8s} {2:10s}'.format('directory', 'size', 'usage perc'))
     print ("")
     sys.stdout.write (RESET)
     tot_cars = tty_width - 6
@@ -65,11 +65,11 @@ def display_graph(my_dirs, tty_width):
         perc = (float(each.size) / total_size) * 100
         curr_cars = int(round (( perc * tot_cars ) / 100,0))
         if unit == 'Gb':
-            print('{0:70} => {1:10.3f} {2}   {3:.2f} %'.format(each.dirname.encode('utf-8'), float(each.size)/1000000, unit, perc))
+            print('{0:70}{1:10.3f} {2}   {3:.2f} %'.format(each.dirname.encode('utf-8'), float(each.size)/1000000, unit, perc))
         elif unit == 'Mb':
-            print('{0:70} => {1:10.3f} {2}   {3:.2f} %'.format(each.dirname.encode('utf-8'), float(each.size)/1000, unit, perc))
+            print('{0:70}{1:10.3f} {2}   {3:.2f} %'.format(each.dirname.encode('utf-8'), float(each.size)/1000, unit, perc))
         else:
-            print('{0:70} => {1:10s} {2:.2f} %'.format(each.dirname.encode('utf-8'), each.size, perc))
+            print('{0:70}{1:10s} {2:.2f} %'.format(each.dirname.encode('utf-8'), each.size, perc))
         sys.stdout.write("[ ")
         if perc >= 70.0:
             sys.stdout.write(RED)
